@@ -1,0 +1,9 @@
+.menu {
+  display: flex;
+  background: $pale;
+  &__nav {
+    > ul {
+      display: flex;
+    }
+  }
+}
