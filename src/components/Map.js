@@ -23,7 +23,7 @@ export default () => {
     ScanShops("52.50","13.40","30000")
       .then((shopsData )=>setShops(shopsData));
 
-  }, [shops]);
+  }, []);
 
   return (
     <section className="map">
