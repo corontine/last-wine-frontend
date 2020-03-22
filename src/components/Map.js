@@ -13,13 +13,22 @@ const imageTexts = ['A lot', 'Middle', 'Low'];
 
 
 export default () => {
-  
+
   const [defCoords, setDefCoords] = React.useState({
     center: [13.402704, 52.51819],
     zoom: [14]
   });
 
-  return ( 
+  const [shops, setShops] = useState([]);
+
+  useEffect(()=> {
+    ScanShops("52.50","13.40","30000")
+      .then((shopsData )=>setShops(shopsData));
+
+  }, []);
+
+
+  return (
     <section className="map">
     <MapComponent full="true" center={defCoords.center} zoom={defCoords.zoom}>
       <MapLocation/>
