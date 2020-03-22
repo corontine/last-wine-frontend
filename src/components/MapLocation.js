@@ -10,10 +10,12 @@ export default (props) => {
     'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
   }
   return (
-    <Popup coordinates={[13.402704, 52.51819]} offset={popupOffset}>
+    <Popup coordinates={[props.lng.toFixed(4), props.lat.toFixed(4)]} offset={popupOffset}>
       <article className="restaurant__popup">
-        <h3>Cento Passi Wine Bar</h3>
+        <h3>{props.name}</h3>
         <p>Free delivery in Berlin on 12+ bottles.</p>
+        <a href={`tel:+${props.tel}`}></a>
+        <p>{props.address}</p>
         <cite>Availability: <strong>Low</strong><img src={glassred} alt=""/> </cite>
         <a href="/restaurants/centro-passi-wine-bar">View and order</a>
       </article>

@@ -7,24 +7,19 @@ const Map = ReactMapboxGl({
 
 
 export default (props) => {
-
   const popupOffset = {
     'bottom-left': [2, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
   }
-
-
   return(
-    <>
-
-        <Map style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{ height: '100vh',width: '100vw'}}
-          center={props.center}
-          zoom={props.zoom}
-        >
-        {props.children}
-      </Map>
-
-      </>
+    <Map 
+      style="mapbox://styles/mapbox/streets-v9"
+      containerStyle={{ height: '100vh',width: '100vw'}}
+      center={props.center}
+      zoom={props.zoom}
+      onMove={props.getScan}
+    >
+      {props.children}
+    </Map>
 
   )
 }

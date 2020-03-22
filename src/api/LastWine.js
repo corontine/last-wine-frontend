@@ -1,8 +1,8 @@
 import axiosBuilder from 'axios';
 
 const axios = axiosBuilder.create({
-    //baseURL: 'https://rf8dhrz5ed.execute-api.eu-central-1.amazonaws.com/dev/'
-    baseURL: 'http://localhost:3000/'
+    baseURL: 'https://rf8dhrz5ed.execute-api.eu-central-1.amazonaws.com/dev/'
+    // baseURL: 'http://localhost:3000/'
 });
 
 export const ScanShops = async (latitude, longitude, radiusInMeters) => {
@@ -11,7 +11,7 @@ export const ScanShops = async (latitude, longitude, radiusInMeters) => {
       longitude,
       radiusInMeters
   });
-  console.log('ScanShops', shops.data);
+//   console.log('ScanShops', shops.data);
   return shops;
 };
 

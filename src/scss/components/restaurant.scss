@@ -1,4 +1,8 @@
 .restaurant {
+
+  &__wrapper{
+    animation: restaurantAppear $bezier .5s;
+  }
   
   &__popup{
     font-family: "Montserrat";
@@ -19,5 +23,16 @@
       color: $pale;
       text-decoration: underline;
     }
+  }
+}
+
+@keyframes restaurantAppear{
+  0%{
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
   }
 }

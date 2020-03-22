@@ -37,8 +37,14 @@ export default () => {
       longitude: coords.lng,
       name: formData.name,
       city: formData.city,
-      address: formData.address,
-      items: [],
+      address: `${formData.address} - ${formData.zipcode}`,
+      items: [{
+        website: formData.website,
+        enabledDelivery: formData.enabledDelivery,
+        availableWine: formData.availableWine,
+        availableWater: formData.availableWater,
+        availableAntipasti: formData.availableAntipasti,
+      }],
       hashKey: 115751,
       rangeKey: "xfvgxntu69",
       geohash: "1157514470122841853",
@@ -57,6 +63,8 @@ export default () => {
       console.log(res)
 		}).catch((err) => console.log(err))
   }
+
+  console.log(watch())
 
   return(
     <main>
