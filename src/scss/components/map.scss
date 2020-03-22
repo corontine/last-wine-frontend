@@ -1,0 +1,81 @@
+.map{
+  overflow: hidden;
+  height: calc(100vh - #{$headerHeight});
+
+  &__utils{
+    position: absolute;
+    // height: $headerHeight * 2 + 20;
+    top: $headerHeight;
+    background: rgba(255,255,255, .75);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    animation: loadContainer .5s;
+
+    @include md {
+      
+      padding: 0 2.5%;
+      align-items: center;
+      flex-direction: row-reverse;
+      > * {
+        flex: 50%;
+      }
+    }
+
+    &--search {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      > input{
+        margin: 1rem 5%;
+        padding: 1rem 5% 1rem 12%;
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid $brown;
+        background: none;
+      }
+
+      &-button{
+        position: absolute;
+        left: 8%;
+        background: url('../../images/search.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 30px;
+        width: 30px;
+        display: block;
+        top: 50%;
+        transform: translateY(-50%);
+        > input{
+          height: 30px;
+          width: 30px;
+        }
+      }
+
+      
+    }
+
+    &--glasses{
+      display: flex;
+      width: 100%;
+      padding: 0 5%;
+      justify-content: space-between;
+      img{
+        height: 24px;
+        width: 24px;
+      }
+      &-button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px;
+        @include md {
+          padding-bottom: initial;
+        }
+      }
+    }
+  }
+}
