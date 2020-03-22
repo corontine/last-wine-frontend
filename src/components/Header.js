@@ -19,7 +19,7 @@ export default () => {
 
   return(
     <header ref={menu} className="menu">
-      <h1 onClick={menuCloser}><NavLink to="/">Last Wine</NavLink></h1>
+      <h1 onClick={menuCloser}><NavLink to="/">Wein <small>und</small> Brot</NavLink></h1>
       <button ref={toggler} onClick={menuToggle}>
         <Toggler />
       </button>

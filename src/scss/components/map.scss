@@ -12,9 +12,9 @@
     display: flex;
     flex-wrap: wrap;
     animation: loadContainer .5s;
+    z-index: 3;
 
     @include md {
-      
       padding: 0 2.5%;
       align-items: center;
       flex-direction: row-reverse;

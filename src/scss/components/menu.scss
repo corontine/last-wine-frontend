@@ -9,16 +9,26 @@
   color: $creme;
   font-weight: 500;
   transition: .35s all $bezier;
-  z-index: 2;
+  z-index: 4;
 
   h1 {
     font-weight: inherit;
+    a{
+      display: flex;
+      align-items: center;
+    }
+    small{
+      @include uppercase;
+      font-size: .55em;
+      padding: 0 .5rem;
+    }
   }
 
   &.opened {
     background: #fff;
     color: $brown;
     transition: .35s all $bezier;
+    
     .menu__nav{
       color: $brown;
       background: #fff;

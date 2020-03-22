@@ -1,0 +1,23 @@
+.restaurant {
+  
+  &__popup{
+    font-family: "Montserrat";
+    color: $brown;
+    cite{
+      display: flex;
+      align-items: center;
+      font-style: normal;
+      >*{
+        padding: 0 .3rem;
+      }
+      img{
+        width: 1.5rem;
+      }
+    }
+    a {
+      display: block;
+      color: $pale;
+      text-decoration: underline;
+    }
+  }
+}
