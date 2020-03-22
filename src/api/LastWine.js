@@ -2,16 +2,17 @@ import axiosBuilder from 'axios';
 
 const axios = axiosBuilder.create({
     baseURL: 'https://rf8dhrz5ed.execute-api.eu-central-1.amazonaws.com/dev/'
+    // baseURL: 'http://localhost:3000/'
 });
 
-export const SearchShops = async (latitude, longitude, radiusInMeters) => {
-    const shops = await axios.post('shops/search', {
-        latitude ,
-        longitude,
-        radiusInMeters
-    });
-    console.log(shops);
-    return shops;
+export const ScanShops = async (latitude, longitude, radiusInMeters) => {
+  const shops = await axios.post('shops/scan', {
+      latitude ,
+      longitude,
+      radiusInMeters
+  });
+//   console.log('ScanShops', shops.data);
+  return shops;
 };
 
 export const GetShop = async (hashKey, rangeKey) => {
@@ -19,7 +20,8 @@ export const GetShop = async (hashKey, rangeKey) => {
         hashKey,
         rangeKey
     });
-    console.log(shop);
+    console.log('GetShop', shop);
+    return shop;
 };
 
 export const CreateShop = async (latitude, longitude, name, city, address, items) => {
@@ -31,6 +33,6 @@ export const CreateShop = async (latitude, longitude, name, city, address, items
         address,
         items
     });
-    console.log(shop);
-
+    console.log('CreateShop', shop);
+    return shop;
 };

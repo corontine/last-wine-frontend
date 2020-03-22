@@ -9,10 +9,13 @@
   color: $creme;
   font-weight: 500;
   transition: .35s all $bezier;
-  z-index: 4;
+  z-index: 600;
 
   h1 {
     font-weight: inherit;
+    @include md {
+      font-size: 1.9em;
+    }
     a{
       display: flex;
       align-items: center;
