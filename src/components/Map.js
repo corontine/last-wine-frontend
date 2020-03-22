@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 
 import glassGreen from '../images/glass-green.png';
@@ -6,6 +6,7 @@ import glassYellow from '../images/glass-yellow.png';
 import glassRed from '../images/glass-red.png';
 
 import GlassButton from './GlassButton';
+import {ScanShops} from "../api/LastWine";
 
 const images = [ glassGreen, glassYellow, glassRed];
 const imageTexts = ['A lot', 'Middle', 'Low'];
@@ -16,7 +17,15 @@ const Map = ReactMapboxGl({
 });
 
 export default () => {
-  return ( 
+  const [shops, setShops] = useState([]);
+
+  useEffect(()=> {
+    ScanShops("52.50","13.40","30000")
+      .then((shopsData )=>setShops(shopsData));
+
+  }, [shops]);
+
+  return (
     <section className="map">
       <Map style="mapbox://styles/mapbox/streets-v9"
         containerStyle={{
