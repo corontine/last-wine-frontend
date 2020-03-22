@@ -14,7 +14,7 @@ export default (props) => {
       <article className="restaurant__popup">
         <h3>{props.name}</h3>
         <p>Free delivery in Berlin on 12+ bottles.</p>
-        <a href={`tel:+${props.tel}`}></a>
+        <a href={`tel:+${props.phone}`}>{props.phone}</a>
         <p>{props.address}</p>
         <cite>Availability: <strong>Low</strong><img src={glassred} alt=""/> </cite>
         <a href="/restaurants/centro-passi-wine-bar">View and order</a>

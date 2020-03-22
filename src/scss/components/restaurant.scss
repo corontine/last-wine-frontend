@@ -1,12 +1,11 @@
 .restaurant {
-
-  &__wrapper{
-    animation: restaurantAppear $bezier .5s;
-  }
   
   &__popup{
     font-family: "Montserrat";
     color: $brown;
+    // height: 0;
+    // overflow: hidden;
+    // width: 1rem;
     cite{
       display: flex;
       align-items: center;
@@ -24,6 +23,39 @@
       text-decoration: underline;
     }
   }
+
+  &__wrapper{
+    animation: restaurantAppear $bezier .5s;
+    cursor: pointer;
+    // &:hover{
+    //   background: $sunny;
+    // }
+    // .mapboxgl-popup-content{
+    //   background: $pale;
+    //   box-shadow: 2px 2px 2px rgba(110, 110, 110, 0.363);
+    // }
+    // .mapboxgl-popup-tip {
+    //   border-top-color: $pale !important;
+    // }
+
+    &.selected{
+
+      // .mapboxgl-popup-content{
+      //   background: #fff;
+      // }
+      // .mapboxgl-popup-tip {
+      //   border-top-color: #fff !important;
+      // }
+      > div {
+        z-index: 200 !important;
+      }
+      // .restaurant__popup{
+      //   width:100%;
+      //   height:100%;
+      // }
+    }
+  }
+  
 }
 
 @keyframes restaurantAppear{
@@ -34,5 +66,17 @@
   to{
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes vibrate{
+  0%{
+    transform: rotateZ(0)
+  }
+  50%{
+    transform: rotateZ(45deg)
+  }
+  100%{
+    transform: rotateZ(0)
   }
 }

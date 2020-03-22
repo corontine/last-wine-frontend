@@ -1,6 +1,6 @@
 html{
   background: $pale;
-  
+
 }
 
 @keyframes loadContainer{
@@ -12,4 +12,20 @@ html{
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@include md {
+  ::-webkit-scrollbar {
+		position: absolute;
+		width: 2px;
+	}
+
+  ::-webkit-scrollbar-track {
+    background: $creme;
+	}
+
+  ::-webkit-scrollbar-thumb {
+		border-radius: .5rem;
+		background: transparentize($pale, .3);
+	}
 }
