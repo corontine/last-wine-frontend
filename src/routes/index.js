@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, ro } from "react-router-dom";
 
 import Home from './Home';
 import ViewMap from './ViewMap';
@@ -13,6 +13,7 @@ export default () => {
   return (
     <Switch>
       <Route exact path="/" component={Home}/>
+      <Route path="/index.html" component={Home}/>
       <Route path="/map" component={ViewMap}/>
       <Route path="/submit" component={Submit}/>
       <Route path="/about" component={About}/>
