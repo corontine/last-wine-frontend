@@ -1,20 +1,62 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'
-import { Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, { Popup, Marker } from 'react-mapbox-gl';
+import serialize from 'serialize-javascript';
+import Pinpoint from '../images/pinpoint.svg'
 
 import MapComponent from '../components/MapComponent';
 
+const Map = ReactMapboxGl({
+  accessToken:'pk.eyJ1IjoiZmdvemVuYyIsImEiOiJjazVoMG9tMjUwY2p1M2xueHUzaXdyY2MzIn0.i6wqAEOUFdUyKEMcrUE__Q',
+});
 export default () => {
-  const { register, handleSubmit, watch, errors } = useForm()
-  const onSubmit = data => { console.log(data) }
+  const __API_URL__='https://rf8dhrz5ed.execute-api.eu-central-1.amazonaws.com/dev/shops';
 
+  const { register, handleSubmit, watch, errors } = useForm()
+
+  const [submitted, setSubmitted] = React.useState(false);
 
   const [defCoords, setDefCoords] = React.useState({
     center: [13.402704, 52.51819],
     zoom: [14]
   });
 
-  console.log(watch())
+  const [coords, setCoords] = React.useState({
+    lng: 13.402704,
+    lat: 52.51819
+  })
+
+  const getCoords = (e) => {
+    // console.log( e.transform.center.lng, e.transform.center.lat)
+    setCoords({lng: e.transform.center.lng, lat: e.transform.center.lat })
+  }
+
+  const onSubmit = formData => { 
+    const data = {
+      latitude: coords.lat,
+      longitude: coords.lng,
+      name: formData.name,
+      city: formData.city,
+      address: formData.address,
+      items: [],
+      hashKey: 115751,
+      rangeKey: "xfvgxntu69",
+      geohash: "1157514470122841853",
+      geoJson: "{\"type\":\"POINT\",\"coordinates\":[123123,123123]}"
+		};
+
+		fetch(`${__API_URL__}/create`, {
+			method: 'post',
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then((res) => {
+      // return res.status === 200 ? setSubmitted(!submitted) : ''
+      console.log(res)
+		}).catch((err) => console.log(err))
+  }
 
   return(
     <main>
@@ -38,7 +80,16 @@ export default () => {
         </div>
         <div className="registration__part registration__part--map">
           <label htmlFor="website">or you can locate your store</label>
-          <MapComponent center={defCoords.center} zoom={defCoords.zoom} width="100%" height="100%"/>
+          <Map style="mapbox://styles/mapbox/streets-v9"
+            containerStyle={{ height: "100%", width: "100%"}}
+            center={[coords.lng, coords.lat]}
+            zoom={defCoords.zoom}
+            onMove={getCoords}
+          >
+            <Marker coordinates={[coords.lng, coords.lat]} anchor="bottom">
+              <img src={Pinpoint} className="pinpoint" alt=""/>
+            </Marker>
+          </Map>
         </div>
         <div className="registration__part">
           <label htmlFor="website">Your Website(facebook, yelp, etc)</label>

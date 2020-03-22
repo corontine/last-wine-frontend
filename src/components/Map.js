@@ -8,6 +8,8 @@ import GlassButton from './GlassButton';
 import MapComponent from './MapComponent';
 import MapLocation from './MapLocation';
 
+import {ScanShops} from '../api/LastWine';
+
 const images = [ glassGreen, glassYellow, glassRed];
 const imageTexts = ['A lot', 'Middle', 'Low'];
 
@@ -19,14 +21,12 @@ export default () => {
     zoom: [14]
   });
 
-  const [shops, setShops] = useState([]);
+  const [shops, setShops] = React.useState([]);
 
-  useEffect(()=> {
+  React.useEffect(()=> {
     ScanShops("52.50","13.40","30000")
       .then((shopsData )=>setShops(shopsData));
-
-  }, []);
-
+  }, [shops]);
 
   return (
     <section className="map">
