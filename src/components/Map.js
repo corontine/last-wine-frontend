@@ -7,7 +7,6 @@ import glassRed from '../images/glass-red.png';
 import ReactMapboxGl from 'react-mapbox-gl';
 
 import GlassButton from './GlassButton';
-// import MapComponent from './MapComponent';
 import MapLocation from './MapLocation';
 
 import {ScanShops} from '../api/LastWine';
@@ -26,77 +25,70 @@ export default () => {
     zoom: [14]
   });
 
-  const [shops, setShops] = React.useState({
-    data: []
-  });
-
-  const [coords, setCoords] = React.useState({
-    lng: 13.402704,
-    lat: 52.51819
-  })
-
-  const mapContainer = React.useRef();
-
-  const getCoords = (e) => {
-    setCoords({lng: e.transform.center.lng, lat: e.transform.center.lat })
-  }
+  const [shops, setShops] = React.useState({ data: [] });
 
   const getScan = (e) => {
-    console.log(e.transform.zoom)
-    ScanShops(e.transform.center.lat.toFixed(4), e.transform.center.lng.toFixed(4),"600")
+    const prevRadius = parseInt(e.transform.scale / 10);
+    const radius = 2500 - prevRadius < 1000 ? 1000 : 3800 - prevRadius;
+  
+    ScanShops(e.transform.center.lat.toFixed(4), e.transform.center.lng.toFixed(4), radius)
       .then((shopsData)=>{
         setShops(shopsData)
-        console.log(shopsData)
       });
   }
 
-  const [previousPopup, setPreviousPopup] = React.useState(0);
-
-  const selectPopup = (e) => {
-    let selectedIndex = e.currentTarget.getAttribute('data-selector');
-    let selected = document.querySelectorAll('[data-selection]')[selectedIndex]
-    let prevSelected = document.querySelectorAll('[data-selection]')[previousPopup]
-    // console.log(selected.c)
-    selected != null && selected.classList.add('selected')
-    prevSelected != null && prevSelected.classList.remove('selected')
-
+  const selectPopup = (el, attrname) => {
+    el.classList.add('selected')
+    let allSelections = document.querySelectorAll('[data-selection]');
+    let selectedIndex = el.getAttribute(attrname);
+    let selected = allSelections[selectedIndex]
+    let selectedLng = selected.getAttribute('data-lng')
+    let selectedLat = selected.getAttribute('data-lat')
+    setDefCoords({center: [selectedLng, selectedLat], zoom:[16]})
     setTimeout(() => {
-      setPreviousPopup(selectedIndex)
-    }, 1);
-    console.log(e)
+      allSelections.forEach((item, i) => {
+        console.log(i, selectedIndex)
+        if(i == selectedIndex) {
+          return item.classList.add('selected')
+        } else {
+          return item.classList.remove('selected');
+        }
+      })
+    }, 50);
+
+      
+  }
+
+  const selectFromList = (e) => {
+    selectPopup(e.currentTarget,'data-selector' )
   }
 
   const selectSelf = (e) => {
-    e.currentTarget.classList.add('selected')
-    let selectedIndex = e.currentTarget.getAttribute('data-selection');
-    let prevSelected = document.querySelectorAll('[data-selection]')[previousPopup]
-    prevSelected != null && prevSelected.classList.remove('selected')
-
-    setTimeout(() => {
-      setPreviousPopup(selectedIndex)
-    }, 1);
-    console.log(e)
+    selectPopup(e.currentTarget,'data-selection' )
   }
-
-  React.useEffect(() => {
-    mapContainer.current.scrollY = 10
-  }, [defCoords])
 
   return (
     <section className="map">
     <Map style="mapbox://styles/mapbox/streets-v9"
-      ref={mapContainer}
       containerStyle={{ height: '100vh',width: '100vw'}}
       center={defCoords.center}
       zoom={defCoords.zoom}
       onDragEnd={getScan}
+      onZoomEnd={getScan}
       onScrollEnd={getScan}
       onStyleLoad={getScan}
     >
       {
         shops.data.length > 2 &&
           shops.data.map((shop,i) => (
-            <div onClick={selectSelf} data-selection={i} key={i} className={`restaurant__wrapper ${i == 0 && 'selected'}`}>
+            <div 
+              onClick={selectSelf} 
+              data-selection={i} 
+              key={i} 
+              data-lng={shop.longitude} 
+              data-lat={shop.latitude} 
+              className={`restaurant__wrapper ${i % 4 === 0 ? 'selected' : ''}`}
+              >
               <MapLocation phone={shop.phone} name={shop.name} lng={shop.longitude} lat={shop.latitude}/>
             </div>
           ))
@@ -113,7 +105,7 @@ export default () => {
       <div className="map__utils--glasses">
         {
           images.map((image, i) => (
-            <GlassButton key={i.toString()} color={image} text={imageTexts[i]}/>
+            <GlassButton key={i} color={image} text={imageTexts[i]}/>
           ))
         }
       </div>
@@ -121,7 +113,7 @@ export default () => {
         {
           shops.data.length > 2 &&
             shops.data.map((shopListItem,i) => (
-              <div onClick={selectPopup} data-selector={i} key={i*1000} className="map__utils--list-item">
+              <div  onClick={selectFromList} data-selector={i} key={i*1000} className="map__utils--list-item">
                 <h4>{shopListItem.name}</h4>
                 <a href={`tel:+${shopListItem.phone}`}>{shopListItem.phone}</a>
               </div>

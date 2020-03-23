@@ -4,18 +4,15 @@ import ReactMapboxGl, { Popup, Marker } from 'react-mapbox-gl';
 import serialize from 'serialize-javascript';
 import Pinpoint from '../images/pinpoint.svg'
 
-import MapComponent from '../components/MapComponent';
-
 const Map = ReactMapboxGl({
   accessToken:'pk.eyJ1IjoiZmdvemVuYyIsImEiOiJjazVoMG9tMjUwY2p1M2xueHUzaXdyY2MzIn0.i6wqAEOUFdUyKEMcrUE__Q',
 });
+
 export default () => {
   const __API_URL__='https://rf8dhrz5ed.execute-api.eu-central-1.amazonaws.com/dev/shops';
 
   const { register, handleSubmit, watch, errors } = useForm()
-
   const [submitted, setSubmitted] = React.useState(false);
-
   const [defCoords, setDefCoords] = React.useState({
     center: [13.402704, 52.51819],
     zoom: [14]
@@ -41,14 +38,17 @@ export default () => {
       items: [{
         website: formData.website,
         enabledDelivery: formData.enabledDelivery,
-        availableWine: formData.availableWine,
-        availableWater: formData.availableWater,
-        availableAntipasti: formData.availableAntipasti,
+        wine: formData.wine,
+        water: formData.water,
+        antipasti: formData.antipasti,
+        cheese: formData.cheese,
+        cake: formData.cake,
+        coffee: formData.coffee,
       }],
       hashKey: 115751,
       rangeKey: "xfvgxntu69",
       geohash: "1157514470122841853",
-      geoJson: "{\"type\":\"POINT\",\"coordinates\":[123123,123123]}"
+      geoJson: `{"type":"POINT","coordinates":[${coords.lng},${coords.lat}]}`
 		};
 
 		fetch(`${__API_URL__}/create`, {
@@ -57,7 +57,7 @@ export default () => {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: serialize(data)
 		}).then((res) => {
       // return res.status === 200 ? setSubmitted(!submitted) : ''
       console.log(res)
@@ -112,16 +112,36 @@ export default () => {
           <input name="enabledDelivery"  ref={register} type="checkbox"/>
         </div>
         <div className="registration__part registration__part--checkbox">
-          <label htmlFor="availableWine">Is wine available?</label>
-          <input name="availableWine"  ref={register} type="checkbox"/>
+          <label htmlFor="wine">Wine</label>
+          <input name="wine" ref={register} type="checkbox"/>
         </div>
         <div className="registration__part registration__part--checkbox">
-          <label htmlFor="avaialableWater">Is water available?</label>
-          <input name="avaialableWater"  ref={register} type="checkbox"/>
+          <label htmlFor="bread">Bread</label>
+          <input name="bread" ref={register} type="checkbox"/>
         </div>
         <div className="registration__part registration__part--checkbox">
-          <label htmlFor="avaialableWater">Is anti-pasti available?</label>
-          <input name="avaialableAntipasti"  ref={register} type="checkbox"/>
+          <label htmlFor="water">Water</label>
+          <input name="water" ref={register} type="checkbox"/>
+        </div>
+        <div className="registration__part registration__part--checkbox">
+          <label htmlFor="water">Water</label>
+          <input name="water"  ref={register} type="checkbox"/>
+        </div>
+        <div className="registration__part registration__part--checkbox">
+          <label htmlFor="antipasti">Anti-pasti</label>
+          <input name="antipasti" ref={register} type="checkbox"/>
+        </div>
+        <div className="registration__part registration__part--checkbox">
+          <label htmlFor="cheese">Cheese</label>
+          <input name="cheese" ref={register} type="checkbox"/>
+        </div>
+        <div className="registration__part registration__part--checkbox">
+          <label htmlFor="cake">Cake</label>
+          <input name="cake" ref={register} type="checkbox"/>
+        </div>
+        <div className="registration__part registration__part--checkbox">
+          <label htmlFor="coffee">Coffee</label>
+          <input name="coffee" ref={register} type="checkbox"/>
         </div>
         <input type="submit" value="Submit"/>
           {errors.exampleRequired && <span>This field is required</span>}

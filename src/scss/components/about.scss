@@ -1,0 +1,28 @@
+.about {
+  height: calc(100vh - #{$headerHeight});
+  animation: loadContainer .5s;
+  display: flex;
+  flex-direction: column-reverse;
+  h2 {
+    font-size: 45px;
+  }
+  > * {
+    flex: 100%;
+  }
+  @include xl {
+    flex-direction: row;
+    > * {
+      flex: 50%;
+    }
+  }
+  &__text{
+    padding: 5%;
+    background: #fff;
+  }
+  &__image{
+    background-image: url('../../images/about.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}

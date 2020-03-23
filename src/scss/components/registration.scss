@@ -92,6 +92,10 @@
       }
     }
 
+    &:nth-child(9){
+      flex: 100% 0;
+    }
+
     &--checkbox {
       justify-content: space-between;
       align-items: center;
@@ -99,8 +103,14 @@
       border: 1px solid $brown;
       border-radius: $radius;
       flex-direction: row;
+      &:nth-child(1){
+        flex: 1 100%;
+      }
       @include md {
         flex: 0 48.75%;
+      }
+      @include xl {
+        flex: 0 23.8%;
       }
       input{
         width: 2rem;
